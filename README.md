@@ -1,7 +1,8 @@
 # Beschreibung
 Hierbei handelt es sich um einen endless Space Shooter, welcher im Rahmen des Moduls "Programmieren in C++" der Hochschule für Wirtschaft und Recht entwickelt wurde.
-In dem Spiel steuert man ein Raumschiff, welches Alienartige Quadrate ausschalten soll. Denn diese Wollen das Mutterschiff rahmen, es gilt somit so lange durchzuhalten wie möglich.
-Ausserdem wird Rundenübergreifend der Highscore gespeichert. Schaffst du es deinen eigenen Highscore zu übertreffen um deine bestmögliche Punktzahl zu erlangen?
+
+In dem Spiel steuert man ein Raumschiff, welches Alienartige Quadrate ausschalten soll. Denn diese wollen das Mutterschiff rammen, es gilt somit so lange durchzuhalten wie möglich.
+Ausserdem wird Rundenübergreifend der Highscore gespeichert. Schaffst du es deinen eigenen Highscore zu übertreffen, um deine bestmögliche Punktzahl zu erlangen?
 
 # Steuerung
 Bewegung:
