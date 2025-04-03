@@ -12,7 +12,7 @@ Schiessen:
 [Leertaste]
 
 # Anwendungsanleitung
-1. Starte Visual Studio (oder eine andere beliebige ID)
+1. Starte Visual Studio (oder eine andere beliebige IDE)
 
 2. Klone das Repository mit Folgendem Link: https://github.com/Ryumo434/Space_Shooter_NasserMohamad.git
 
