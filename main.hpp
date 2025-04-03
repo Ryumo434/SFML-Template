@@ -1,15 +1,16 @@
 #pragma once
 #include"Includes.hpp"
 #include"SafeQueue.hpp"
+class main
+{
 
-class Window {
 public:
-	Window(const unsigned int& width, const unsigned int& height, std::string const& title);
+	//Window(const unsigned int& width, const unsigned int& height, std::string const& title);
 	bool isWindowOpen();
 	unsigned int width;
 	unsigned int height;
 	std::string title;
-	std::atomic<bool> close_window=false;
+	std::atomic<bool> close_window = false;
 
 protected:
 	sf::RenderWindow window;
@@ -17,3 +18,4 @@ protected:
 	void render_thread();
 	std::mutex window_mutex;
 };
+
