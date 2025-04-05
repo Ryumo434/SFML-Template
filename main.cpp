@@ -1,39 +1,39 @@
 #include "main.hpp"
 #include <SFML/Graphics.hpp>
-#include <iostream>  // Fügt std::cout hinzu
+#include <iostream>  
 #include <fstream>
 #include <filesystem>
 #include "..//Player.hpp"
 #include "..//Enemy.hpp"
 #include "..//Highscore.hpp"
-#include <ctime>  // Für std::time              
+#include <ctime>               
 #include <vector>
-#include <cstdlib> // Für std::rand()
-#include <algorithm> // Für std::shuffle
-#include <random>    // Für std::default_random_engine
+#include <cstdlib> 
+#include <algorithm>
+#include <random>    
 
 enum GameState { MAIN_MENU, IN_GAME, GAME_OVER };
 
 int main() {
 
     Highscore highscoreObj;
-    int highScore = highscoreObj.loadHighScore(); // Initialer Highscore
+    int highScore = highscoreObj.loadHighScore(); //Initialer Highscore
     int playerScore = 0; // Spieler-Score
 
-    // Initialisiere den Zufallszahlengenerator
+    //Initialisiere den Zufallszahlengenerator
     std::srand(std::time(0));
 
     sf::RenderWindow window(sf::VideoMode(1200, 900), "Space Shooter");
     window.setFramerateLimit(60);
 
-    // Laden der Schriftart   
+    //Laden der Schriftart   
     sf::Font font;
     if (!font.loadFromFile("Assets/Fonts/ARIAL.TTF")) {
         std::cerr << "Fehler beim Laden der Schriftart! Überprüfe den Pfad zur Datei." << std::endl;
         std::cerr << "Aktueller Arbeitsordner: " << std::filesystem::current_path() << std::endl;
     }
 
-    // Menütitel
+    //Menütitel
     sf::Text menuTitle;
     menuTitle.setFont(font);
     menuTitle.setString("Space Shooter");
@@ -48,11 +48,11 @@ int main() {
     menuControls.setFillColor(sf::Color::White);
     menuControls.setPosition(460.f, 500.f);
 
-    // Spielstatus
+    
     GameState gameState = MAIN_MENU;
 
-    // Erstelle das untere Interface-Fenster (HUD)
-    sf::RectangleShape hud(sf::Vector2f(1200.f, 200.f)); // Breite = Fensterbreite, Höhe = 300px
+    //untere Interface-Fenster (HUD)
+    sf::RectangleShape hud(sf::Vector2f(1200.f, 200.f));
     hud.setFillColor(sf::Color::Black);
     hud.setOutlineThickness(5.f);
     hud.setOutlineColor(sf::Color::White);
@@ -109,15 +109,15 @@ int main() {
     if (!bgTexture.loadFromFile("Assets/Sprites/spaceBackground.jpg")) {
         std::cerr << "Fehler beim Laden des Hintergrundbildes!" << std::endl;
     }
-    // Zwei Sprites für den endlos scrollenden Hintergrund
+    //Zwei Sprites für den endlos scrollenden Hintergrund
     sf::Sprite bgSprite1(bgTexture);
     sf::Sprite bgSprite2(bgTexture);
     bgSprite1.setPosition(0.f, 0.f);
     bgSprite2.setPosition(0.f, -static_cast<float>(bgTexture.getSize().y));
-    // Geschwindigkeit des Scrollings (Pixel pro Sekunde)
+    //Geschwindigkeit des Scrollings
     float bgScrollSpeed = 80.f;
 
-    // Hauptspiel-Schleife
+    //Hauptspiel-Schleife
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -137,7 +137,7 @@ int main() {
             else if (gameState == GAME_OVER) {
                 if (event.type == sf::Event::KeyPressed) {
                     if (event.key.code == sf::Keyboard::R) {
-                        // Setze das Spiel zurück
+                        //Setze das Spiel zurück
                         playerScore = 0;
                         playerHealth = 100.f;
                         healthBar.setSize(sf::Vector2f(300.f, 25.f));
@@ -153,22 +153,22 @@ int main() {
             }
         }
 
-        // Berechne DeltaTime
+        //Berechne DeltaTime
         float deltaTime = clock.restart().asSeconds();
 
-        // Hintergrund aktualisieren (nur im Spielmodus)
+        //Hintergrund aktualisieren (nur im Spielmodus)
         if (gameState == IN_GAME) {
             bgSprite1.move(0.f, bgScrollSpeed * deltaTime);
             bgSprite2.move(0.f, bgScrollSpeed * deltaTime);
 
-            // Wenn ein Sprite aus dem Fenster läuft, setze es wieder oben an
+            //Wenn ein Sprite aus dem Fenster läuft, setze es wieder oben an
             if (bgSprite1.getPosition().y >= static_cast<float>(bgTexture.getSize().y))
                 bgSprite1.setPosition(0.f, bgSprite2.getPosition().y - static_cast<float>(bgTexture.getSize().y));
             if (bgSprite2.getPosition().y >= static_cast<float>(bgTexture.getSize().y))
                 bgSprite2.setPosition(0.f, bgSprite1.getPosition().y - static_cast<float>(bgTexture.getSize().y));
         }
 
-        // Spielzustände zeichnen
+        //Spielzustände zeichnen
         window.clear();
 
         if (gameState == MAIN_MENU) {
@@ -176,11 +176,11 @@ int main() {
             window.draw(menuControls);
         }
         else if (gameState == IN_GAME) {
-            // Hintergrund zeichnen
+            //Hintergrund zeichnen
             window.draw(bgSprite1);
             window.draw(bgSprite2);
 
-            // Gegner-Spawn Logik
+            //Gegner-Spawn Logik
             spawnTimer += deltaTime;
             if (spawnTimer >= spawnInterval) {
                 int numEnemiesToSpawn = std::rand() % spawnPositions.size() + 1;
@@ -194,7 +194,7 @@ int main() {
                 spawnTimer = 0.0f;
             }
 
-            // Gegner aktualisieren und Kollisionen prüfen
+            //Gegner aktualisieren und Kollisionen prüfen
             for (auto it = enemies.begin(); it != enemies.end();) {
                 if (it->getBounds().top + it->getBounds().height >= 800.f && !it->hasDealtDamage()) {
                     playerHealth -= 10.f;
@@ -214,13 +214,13 @@ int main() {
                 }
             }
 
-            // Highscore aktualisieren
+            //Highscore aktualisieren
             if (highScore < playerScore) {
                 highScore = playerScore;
                 highscoreObj.saveHighScore(highScore);
             }
 
-            // UI Texte
+            //UI Texte
             sf::Text playerScoreText;
             playerScoreText.setFont(font);
             playerScoreText.setString("score: " + std::to_string(playerScore));
@@ -235,18 +235,18 @@ int main() {
             highScoreText.setFillColor(sf::Color::White);
             highScoreText.setPosition(950.f, 850.f);
 
-            // Lebensbalken anpassen
+            //Lebensbalken anpassen
             float healthPercentage = playerHealth / maxHealth;
             healthBar.setSize(sf::Vector2f(300.f * healthPercentage, 25.f));
 
-            // Spieler Eingaben 
+            //Spieler Eingaben 
             player.handleInput(deltaTime);
             player.update(deltaTime, enemies);
 
             
             player.draw(window);
 
-            // Zeichne Gegner
+            //Zeichne Gegner
             for (auto& enemy : enemies) {
                 enemy.draw(window);
             }

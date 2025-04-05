@@ -5,7 +5,6 @@ class main
 {
 
 public:
-	//Window(const unsigned int& width, const unsigned int& height, std::string const& title);
 	bool isWindowOpen();
 	unsigned int width;
 	unsigned int height;

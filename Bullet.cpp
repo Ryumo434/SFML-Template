@@ -1,16 +1,16 @@
 #include "Bullet.hpp"
 
 Bullet::Bullet(float startX, float startY) {
-    shape.setSize({ 10, 30 }); // Größe des Projektils
+    shape.setSize({ 10, 30 });
     shape.setFillColor(sf::Color::Red);
     shape.setPosition(startX, startY);
 }
 
 void Bullet::update(float deltaTime) {
-    // Bewege das Projektil nach oben
+    //Bewegt das Projektil nach oben
     shape.move(0.f, -speed * deltaTime);
 
-    // Wenn das Projektil aus dem Bildschirm verschwindet, setze es als tot
+    //Lösche das Projektil nach dem es aussehralb des Bildschirmes ist
     if (shape.getPosition().y < 0) {
         alive = false;
     }

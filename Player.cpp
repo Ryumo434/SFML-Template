@@ -26,7 +26,7 @@ void Player::handleInput(float deltaTime) {
 
     sprite.move(movement * deltaTime);
 
-    // Beispiel für Rotation basierend auf horizontaler Bewegung:
+    //Beispiel für Rotation basierend auf horizontaler Bewegung:
     if (movement.x < 0)
         sprite.setRotation(-10);
     else if (movement.x > 0)
@@ -34,9 +34,9 @@ void Player::handleInput(float deltaTime) {
     else
         sprite.setRotation(0);
 
-    // Schießen mit der Leertaste (nur einmal pro Tastendruck)
+    //Schießen mit der Leertaste (nur einmal pro Tastendruck)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canShoot) {
-        // Nutze getGlobalBounds() um die Breite zu ermitteln
+        //getGlobalBounds() um die Breite zu ermitteln
         float shipWidth = sprite.getGlobalBounds().width;
         bullets.push_back(Bullet(sprite.getPosition().x + shipWidth / 2 - 5, sprite.getPosition().y));
         canShoot = false; // Schießen verhindern, bis der Cooldown abgelaufen ist
@@ -47,7 +47,7 @@ void Player::handleInput(float deltaTime) {
 void Player::update(float deltaTime, std::vector<Enemy>& enemies) {
     for (auto& bullet : bullets) {
         bullet.update(deltaTime);
-        // Kollisionsprüfung zwischen Projektile und Gegner
+        //Kollision zwischen Projektile und Gegner
         for (auto& enemy : enemies) {
             if (bullet.getBounds().intersects(enemy.getBounds())) {
                 killedEnemy = true;
@@ -57,7 +57,7 @@ void Player::update(float deltaTime, std::vector<Enemy>& enemies) {
         }
     }
 
-    // Entferne inaktive Projektile
+    //Entferne inaktive Projektile
     bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](Bullet& b) {
         return !b.isAlive();
         }), bullets.end());
@@ -69,7 +69,7 @@ void Player::update(float deltaTime, std::vector<Enemy>& enemies) {
         }
     }
 
-    // Update und Entfernen der Gegner
+    //Update und Entfernen der Gegner
     for (auto& enemy : enemies) {
         enemy.update(deltaTime);
     }
@@ -77,7 +77,7 @@ void Player::update(float deltaTime, std::vector<Enemy>& enemies) {
         return !e.isAlive();
         }), enemies.end());
 
-    // Begrenzung des Spielfelds (mit Verwendung von getGlobalBounds)
+    //Begrenzung des Spielfelds
     sf::Vector2f pos = sprite.getPosition();
     sf::FloatRect bounds = sprite.getGlobalBounds();
     if (pos.x < 0) pos.x = 0;
